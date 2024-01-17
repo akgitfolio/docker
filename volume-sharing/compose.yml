@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  producer:
+    build: ./producer
+    volumes:
+      - shared-data:/data
+    environment:
+      - DATA_PATH=/data/data.txt
+    ports:
+      - "3000:3000"
+
+  consumer:
+    build: ./consumer
+    volumes:
+      - shared-data:/data
+    environment:
+      - DATA_PATH=/data/data.txt
+    ports:
+      - "3001:3001"
+
+volumes:
+  shared-data:
