@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: gogs
+      POSTGRES_PASSWORD: gogs
+      POSTGRES_DB: gogs
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - gogs-network
+
+  gogs:
+    image: gogs/gogs:latest
+    restart: always
+    ports:
+      - "10022:22"
+      - "3000:3000"
+    environment:
+      - "RUN_CROND=true"
+    volumes:
+      - gogs_data:/data
+    depends_on:
+      - postgres
+    networks:
+      - gogs-network
+
+networks:
+  gogs-network:
+    driver: bridge
+
+volumes:
+  pg_data:
+  gogs_data:
