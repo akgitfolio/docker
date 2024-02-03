@@ -1,0 +1,6 @@
+# Dockerfile for authentication service
+FROM node:latest
+WORKDIR /app
+COPY . .
+RUN npm install
+CMD ["npm", "start"]
